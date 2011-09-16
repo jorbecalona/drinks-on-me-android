@@ -14,8 +14,8 @@ public class FoursquareOauthActivity extends Activity {
     private static final String TAG = "FoursquareConnectActivity";
 	
     //Venmo Foursquare oauth values
-    public static final String CALLBACK_URL = "";  //TODO Enter fill this out
-    public static final String CLIENT_ID = ""; //TODO Enter fill this out
+    public static final String CALLBACK_URL = "drinksonme://authenticate";
+    public static final String CLIENT_ID = "3T5JOJ0IV4C5IKTQ3ZERVZHANY3DCY2BM34OWBIY4VP15BUT";
     
     public String mUserAuthorized = "0";
     public String accessToken;
@@ -23,7 +23,7 @@ public class FoursquareOauthActivity extends Activity {
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
-    	Log.v("drinks", "FoursquareConnectActivity");
+    	Log.v("drinks", "in FoursquareConnectActivity");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.webview);
         

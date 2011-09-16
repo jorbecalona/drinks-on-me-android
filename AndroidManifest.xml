@@ -19,11 +19,21 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
 	</activity>
+	<activity android:name=".UserListActivity"/>
 
 	<activity android:name=".FoursquareOauthActivity"/>
 	<activity android:name=".LoginActivity"/>
 	<activity android:name=".TransactionActivity"/>
 	<activity android:name=".VenmoOauthActivity"/>
+
+	<activity android:name=".URLActivity">
+		<intent-filter>
+	      <action android:name="android.intent.action.VIEW" />
+	      <category android:name="android.intent.category.DEFAULT" />
+	      <category android:name="android.intent.category.BROWSABLE" />
+	       <data android:scheme="venmo1001abcd" /> 
+	    </intent-filter> 
+	</activity>
 
     </application>
 </manifest>

@@ -56,6 +56,32 @@ public class FoursquareApi {
 		
 	}
 	
+	/*public JSONArray getAllVenmoUsernames(Context ctxt, ArrayList<String> userIDs) throws JSONException{
+		JSONArray users = null;
+		return 
+		return users;
+	}*/
+	
+	
+	//Get venue name from id
+	public String getVenueName(String venue_id)
+	{
+		//String url = "https://api.foursquare.com/v2/venues/" + venue_id;
+		String url = makeUrl(mContext, "venues/" + venue_id);
+		JSONObject rawJSON = mApi.doHTTPRequest(url);
+		String name = "my location";
+		try {
+			JSONObject response = (JSONObject) rawJSON.get("response");
+			JSONObject venueJSON = (JSONObject) response.get("venue");
+			name = venueJSON.get("name").toString();
+		}
+		catch(JSONException e)
+		{
+			Log.v("Drinks ERROR", "Exception thrown when figuring out venue name: " + e.toString());
+		}
+		return name;
+	}
+	
 	
 	// Get and set FS user info 
 	public User getFsUserInfo(Context ctxt, String id) {
@@ -80,7 +106,7 @@ public class FoursquareApi {
 		return mUser;
 	}
 	
-	public ArrayList<String> getHereNow(String venue_id)
+	public ArrayList<String> getHereNow(String venue_id) throws JSONException
 	{
 		String url = makeUrl(mContext, "venues/" + venue_id + "/herenow");
 		JSONObject rawJSON = mApi.doHTTPRequest(url);
@@ -98,7 +124,6 @@ public class FoursquareApi {
 				JSONObject itemJSON = items.getJSONObject(i);
 				JSONObject userJSON = (JSONObject) itemJSON.get("user");
 				peopleAtVenueIDs.add((String)userJSON.get("id"));
-				Log.v("drinks", "id***: " + (String)userJSON.get("id"));
 			}
 		}
 		catch(JSONException e)
@@ -107,8 +132,6 @@ public class FoursquareApi {
 		}
 		return peopleAtVenueIDs;
 	}
-	
-	
 	
 	
 	// Helper method to set-up api url

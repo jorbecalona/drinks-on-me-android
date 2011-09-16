@@ -1,6 +1,8 @@
 package com.drinksonme.util;
 
 
+import java.util.Date;
+
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
@@ -51,5 +53,35 @@ public class ViewTools {
     		// We don't mind. android cleared it for us.
     	}
     }    
+    
+    public static String dateString(Date mCreatedAt) {
+	    Date today = new Date();
+
+	    String timeString = "";
+	    
+	    if (mCreatedAt != null) { 
+	    	// Get msec from each, and subtract.
+	    	long diff = today.getTime() - mCreatedAt.getTime();
+	    	Long daysOld = (diff / (1000 * 60 * 60 * 24));
+	    	if (daysOld > 0) {
+	    		timeString += daysOld.toString() + " days";
+	    	} else {
+	    		Long hoursOld = (diff / (1000 * 60 * 60));
+	    		if (hoursOld > 0) {
+	    			timeString += hoursOld + " hours";
+	    		} else {
+	    			Long minutesOld = (diff / (1000 * 60));
+	    			timeString += minutesOld + " minutes";
+	    		}
+	    	}
+	    	
+	    	// If it's a zero don't make the unit plural...
+	    	if (timeString.substring(0, 1).equals("1") && timeString.substring(1,2).equals(" ")) {
+	    		timeString = timeString.substring(0, timeString.length() - 1);
+	    	}
+	    }
+	    
+	    return timeString;
+	}
 
 }

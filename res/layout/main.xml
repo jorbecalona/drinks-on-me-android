@@ -4,9 +4,37 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     >
-<TextView  
-    android:layout_width="fill_parent" 
-    android:layout_height="wrap_content" 
-    android:text="@string/hello"
-    />
+    
+    <com.drinksonme.util.SegmentedRadioGroup
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_margin="5dip"
+		android:orientation="horizontal"
+		android:id="@+id/segment_text"
+		android:gravity="center"
+		android:checkedButton="@+id/button_one">
+		<RadioButton android:id="@id/button_one"
+			android:minWidth="160dip"
+			android:minHeight="33dip"
+			android:text="Friends"
+			android:textAppearance="?android:attr/textAppearanceSmall"
+			android:button="@null"
+			android:gravity="center"
+			android:textColor="@color/radio_colors" />
+		<RadioButton android:id="@+id/button_two"
+			android:minWidth="160dip"
+			android:minHeight="33dip"
+			android:text="at location"
+			android:button="@null"
+			android:gravity="center"
+			android:textAppearance="?android:attr/textAppearanceSmall"
+			android:textColor="@color/radio_colors" />
+	</com.drinksonme.util.SegmentedRadioGroup>
+    
+    
+<ListView android:id="@android:id/list"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"/>
+  
+    
 </LinearLayout>

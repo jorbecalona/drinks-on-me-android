@@ -33,7 +33,7 @@
 	      <action android:name="android.intent.action.VIEW" />
 	      <category android:name="android.intent.category.DEFAULT" />
 	      <category android:name="android.intent.category.BROWSABLE" />
-	       <data android:scheme="venmo1001abcd" /> 
+	       <data android:scheme="venmo9999abcd" /> 
 	    </intent-filter> 
 	</activity>
 

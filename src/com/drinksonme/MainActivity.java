@@ -36,7 +36,6 @@ public class MainActivity extends ListActivity implements OnCheckedChangeListene
 	User mUser = new User();
 	Button button;
 	FriendsAdapter adapter;
-	
    
 	// Launched when the app is first opened
 	@Override
@@ -89,6 +88,7 @@ public class MainActivity extends ListActivity implements OnCheckedChangeListene
 			try
 			{
 				adapter = new FriendsAdapter(mContext, R.layout.list_item, R.id.weekofday, mAppState.getFoursquareManager().friends, this);
+				mAppState.getFoursquareManager().mWhichOne = 1;
 			}
 			catch(Exception e)
 			{
@@ -101,6 +101,7 @@ public class MainActivity extends ListActivity implements OnCheckedChangeListene
 			try
 			{
 				adapter = new FriendsAdapter(mContext, R.layout.list_item, R.id.weekofday, mAppState.getFoursquareManager().peopleAtVenue, this);
+				mAppState.getFoursquareManager().mWhichOne = 2;
 			}
 			catch(Exception e)
 			{

@@ -14,7 +14,7 @@
 		android:gravity="center"
 		android:checkedButton="@+id/button_one">
 		<RadioButton android:id="@id/button_one"
-			android:minWidth="150dip"
+			android:minWidth="160dip"
 			android:minHeight="33dip"
 			android:text="Friends"
 			android:textAppearance="?android:attr/textAppearanceSmall"

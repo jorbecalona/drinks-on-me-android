@@ -43,6 +43,8 @@ public class FoursquareManager {
 	public static ArrayList<User> sPeopleAtVenue;
 	public User[] peopleAtVenue;
 	
+	public int mWhichOne = 1; //variable indicating which tab (friends or @locaiton) is selected. 1 is friends, 2 is @location
+	
 	public String sVenueName;
 	
 	private FriendsAdapter adapter;
@@ -216,7 +218,9 @@ public class FoursquareManager {
 			for(String id: ids) //The size of ids is always just 1.  
 			{
 				User mUser = mFsApi.getFsUserInfo(mContext, id);
-				sFriends.add(mUser);
+				if(mUser.mPhone != null || mUser.mEmail != null || mUser.mVenmoId != null) {
+					sFriends.add(mUser);
+				}
 				
 				//Log.v("Drinks FoursquareManager GetFsUserInfoTask doInBackground", "User added with id: " + id + ", first name: " + mUser.mFirstName + ", full name: " + mUser.mFullName);
 				publishProgress();
@@ -248,7 +252,6 @@ public class FoursquareManager {
 				}
 			}
 			
-			
 			adapter = new FriendsAdapter(mContext, R.layout.list_item, R.id.weekofday, friends, myListActivity);
 			myListActivity.setListAdapter(adapter);
 
@@ -259,7 +262,15 @@ public class FoursquareManager {
 				      // When clicked, show a toast with the TextView text
 				      Log.v("Drinks MainActivity", "something was selected!");
 				      
-				      User user = friends[position];
+				      User user;
+				      if(mWhichOne == 2) {
+				    	  Log.v("Drinks Foursquaremanager", "Using peopleAtVenue********");
+				    	  user = peopleAtVenue[position];
+				      } else {
+				    	  Log.v("Drinks Foursquaremanager", "Using friends*************");
+				    	  user = friends[position];
+				      }
+				      
 				      Log.v("Drinks FoursquareManager", "user selected was: " + user.mFullName);
 				      
 				      String recipient = null;
@@ -332,7 +343,9 @@ public class FoursquareManager {
 			for(String id: ids)
 			{
 				User mUser = mFsApi.getFsUserInfo(mContext, id);
-				sPeopleAtVenue.add(mUser);
+				if(mUser.mPhone != null || mUser.mEmail != null || mUser.mVenmoId != null) {
+					sPeopleAtVenue.add(mUser);
+				}
 				
 				//Log.v("Drinks FoursquareManager GetFsUserInfoTask doInBackground", "User added with id: " + id + ", first name: " + mUser.mFirstName + ", full name: " + mUser.mFullName);
 				publishProgress();
@@ -435,7 +448,7 @@ public class FoursquareManager {
 			    			}
 			        	}
 				    }
-				  });	*/  
+				  });*/
 		}
 	
 	}

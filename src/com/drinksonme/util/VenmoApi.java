@@ -18,8 +18,8 @@ public class VenmoApi {
 	
 	private static final String myAppId = "1001";
 	
-	String CLIENT_ID = ""; //need to get this from foursquare
-	static String SECRET = "";  //need to get this from Venmo
+	String CLIENT_ID = ""; //need to get this from foursquare (https://foursquare.com/oauth/register)
+	static String SECRET = "";  //need to get this from Venmo (https://venmo.com/account/app/new)
 	
 	
 	public static Hashtable<String,String> venmoHashtable = new Hashtable<String,String>();

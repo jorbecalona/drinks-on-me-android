@@ -348,7 +348,7 @@ public class FoursquareManager {
 				      }
 				      
 				      
-				      String app_id = "1001";
+				      String app_id = ""; //Need to get this from Venmo - this is the client id (https://venmo.com/account/app/new)
 				      String local_app_id = "abcd";
 				      String app_name = "DrinksOnMe";
 				      String amount = "5.00";

@@ -28,6 +28,7 @@ import android.widget.EditText;
 
 public class VenmoSDK
 {
+	
 	//private String myAppID, myAppLocalId, myAppName;
 	public VenmoSDK(String myAppId, String myAppLocalId, String myAppName)
 	{
@@ -36,6 +37,7 @@ public class VenmoSDK
 		this.myAppName = myAppName;*/
 		
 	}
+	
 	/*
 	 * Takes the recipients, amount, and note, and returns an Intent object
 	 */

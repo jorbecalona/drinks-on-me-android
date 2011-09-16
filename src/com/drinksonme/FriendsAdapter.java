@@ -53,12 +53,26 @@ public class FriendsAdapter extends ArrayAdapter<User>
 		LayoutInflater inflater=(test).getLayoutInflater();
 		View row=inflater.inflate(textViewResourceId, parent, false);
 		
-		TextView label=(TextView)row.findViewById(R.id.weekofday);
-		label.setText(users[position].toString());
+		try
+		{
+			TextView label=(TextView)row.findViewById(R.id.weekofday);
+			label.setText(users[position].toString());
+		}
+		catch(Exception e)
+		{
+			Log.v("Drinks FriendsAdapter", "exception caught: " + e.toString());
+		}
 
 		TextView location=(TextView)row.findViewById(R.id.location);
 		User u = (User)users[position];
-		location.setText(u.mLastCheckin.mName);
+		try
+		{
+			location.setText(u.mLastCheckin.mName);
+		}
+		catch(Exception e)
+		{
+			location.setText("");
+		}
 		//location.setText(u.mVenmoId);
 		
 		String imageURL = u.mPhoto;
@@ -67,15 +81,27 @@ public class FriendsAdapter extends ArrayAdapter<User>
 		imgView = (ImageView)row.findViewById(R.id.icon);
 		imgView.getLayoutParams().height = 80;
 		imgView.getLayoutParams().width = 80;
-		if(imageURL == null || imageURL == "")
+		if(u.mFullName.contains("loading"))
 		{
+			imgView.setImageResource(R.drawable.ajaxloader);
+		}
+		else if(imageURL == null || imageURL == "")
+		{
+			Log.v("Drinks FriendsAdapter", "Full name is: " + u.mFullName);
 			imgView.setImageResource(R.drawable.blank_boy);
 		}
 		else
 		{
 			Log.v("Drinks FriendsAdapater", "image url for " + u.mFullName + ": " + u.mPhoto);
-			Drawable image = ImageOperations(context, imageURL, "image.jpg");
-			imgView.setImageDrawable(image);	
+			try
+			{
+				Drawable image = ImageOperations(context, imageURL, "image.jpg");
+				imgView.setImageDrawable(image);
+			}
+			catch(Exception e)
+			{
+				Log.v("Drinks FriendsAdapter", "Error: exception caught when displaying image: " + e.toString());
+			}
 		}
 		
 		

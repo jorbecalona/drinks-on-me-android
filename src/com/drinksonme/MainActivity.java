@@ -41,6 +41,7 @@ public class MainActivity extends ListActivity implements OnCheckedChangeListene
 	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.v("Drinkstest MainActivity", "Reached Main Activity");
         
         Log.v("drinks", "in Main Activity");
         
@@ -53,7 +54,7 @@ public class MainActivity extends ListActivity implements OnCheckedChangeListene
         
        // If they are not already connected to foursquare, connect them
        if(DrinksSettings.getFoursquareToken(mContext).equals("")
-    		   || DrinksSettings.getFoursquareToken(mContext)==null){ 
+    		   || DrinksSettings.getFoursquareToken(mContext)==null){
     	   foursquareOauth();
        }else{
     	   
@@ -65,16 +66,25 @@ public class MainActivity extends ListActivity implements OnCheckedChangeListene
            new GetFoursquareFriendsTask().execute();
            new GetPeopleAtVenueTask().execute(); 
            
+           User[] loading = new User[1];
+           User user_loading_placeholder = new User();
+           user_loading_placeholder.setName("loading...");
+           loading[0] = user_loading_placeholder;
+           
+           //adapter = new FriendsAdapter(mContext, R.layout.list_item, R.id.weekofday, loading, this);
+		   //this.setListAdapter(adapter);
+           
            /*Intent i = new Intent(this, UserListActivity.class);
            startActivity(i);*/
+           SegmentedRadioGroup segmentText = (SegmentedRadioGroup) findViewById(R.id.segment_text);
+           segmentText.setOnCheckedChangeListener(this);
         	
        }       
        
     	 // Retrieve this user's data
     	 // Launch the task to load the contacts screen 
        	
-       SegmentedRadioGroup segmentText = (SegmentedRadioGroup) findViewById(R.id.segment_text);
-       segmentText.setOnCheckedChangeListener(this);
+       
        
     }
 	
@@ -136,6 +146,16 @@ public class MainActivity extends ListActivity implements OnCheckedChangeListene
 			/*Intent i = new Intent(this, UserListActivity.class);
 	        startActivity(i);*/
 			
+			try
+			{
+				SegmentedRadioGroup segmentText = (SegmentedRadioGroup) findViewById(R.id.segment_text);
+			    segmentText.setOnCheckedChangeListener(this);
+			}
+			catch(Exception e)
+			{
+				Log.v("Drinks MainActivity", "Error: exception caught when trying to add segment radio: " + e.toString());
+			}
+			
 		} 
 		
 		// If not successful, pop up warning
@@ -157,6 +177,7 @@ public class MainActivity extends ListActivity implements OnCheckedChangeListene
 
 		@Override
 		protected Void doInBackground(Void... voids) {
+			Log.v("Drinkstest MainActivity", "Reached GetFoursquareFriends task, doInBackground");
 			// Make the FoursquareAPI call to retrieve foursquare info
 			
 			// Unsure of what the return type should be, could be User and then you would populate the users as they come in
@@ -170,6 +191,7 @@ public class MainActivity extends ListActivity implements OnCheckedChangeListene
 
 		@Override
 		protected void onPostExecute(Void v) {
+			Log.v("Drinkstest MainActivity", "Reached onPostExecute of GetFoursquareFriendsTask");
 			if (mResult == true) {
 				//Run the task to show the contacts.  modified: now they are shown in FoursquareManager.java
 			} 
@@ -187,12 +209,14 @@ public class MainActivity extends ListActivity implements OnCheckedChangeListene
 		private boolean mResult;
 		protected Void doInBackground(Void...voids)
 		{
+			Log.v("Drinkstest MainActivity", "Reached GetPeopleAtVenueTask, doInBackground");
 			mAppState.getFoursquareManager().GetVenueName();
 			mResult = mAppState.getFoursquareManager().RetrievePeopleAtVenue(mContext, mUser, adapter);
 			return null;
 		}
 		protected void onPostExecute(Void  v)
 		{
+			Log.v("Drinkstest MainActivity", "Reached onPostExecute of GetFoursquareFriends task");
 			try
 			{
 				RadioButton tab = (RadioButton)findViewById(R.id.button_two);

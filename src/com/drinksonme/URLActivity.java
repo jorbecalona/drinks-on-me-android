@@ -15,7 +15,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 /**
- * Handles venmo1000:// URIs
+ * Handles venmo1001:// URIs
  */
 public class URLActivity extends Activity {
 	

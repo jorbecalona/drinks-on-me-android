@@ -32,7 +32,6 @@ public class User {
 		public Double mLng;
 		public Double mLat;
 		public String mCity;
-		public String mCrossStreet;
 		public String mVenueId;
 		public String mName;
 		public String mState;
@@ -48,6 +47,13 @@ public class User {
 	{
 		return mFullName;
 	}
+	
+	public void setName(String name)
+	{
+		this.mFullName = name;
+	}
+	
+	
 	
 	public static String dateString(String mRawCreatedAt) {
 	    
@@ -165,7 +171,6 @@ public class User {
 			mUser.mLastCheckin.mName = (String)venue.get("name");
 			JSONObject location = (JSONObject)venue.get("location");
 			mUser.mLastCheckin.mAddress = (String)location.get("address");
-			mUser.mLastCheckin.mCrossStreet = (String)location.get("crossStreet");
 			mUser.mLastCheckin.mLat = (Double)location.get("lat");
 			mUser.mLastCheckin.mLng = (Double)location.get("lng");
 			mUser.mLastCheckin.mCity = (String)location.get("city");

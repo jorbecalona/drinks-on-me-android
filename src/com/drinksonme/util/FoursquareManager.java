@@ -72,11 +72,13 @@ public class FoursquareManager {
 	// May return users as they come in??
 	public boolean RetrieveFoursquareFriends(Context ctxt, User user, FriendsAdapter adapter) {
 		
+		Log.v("Drinkstest", "Reached RetrieveFoursquareFriends");
 		this.adapter = adapter;
 		// Get array of friends ids
 		try { 
 			sFriends = new ArrayList<User>();
 			sFriendsIDs = mFsApi.getFriendsIDs(mContext);
+			Log.v("FoursquareManager", "sFriendsIDs: " + sFriendsIDs.toString() + "***********");
 			
 		} catch (JSONException e) {Log.v("ERROR", e.toString());}
 		
@@ -84,11 +86,10 @@ public class FoursquareManager {
 		if (sFriendsIDs.size() != 0 || sFriendsIDs!=null){
 			
 			//new CheckIfOnVenmoTask().execute(sFriendsIDs);
-			
+			new GetVenmoUsernamesTask_Friends().execute(); //Get the list of Venmo usernames 
 			for (String id: sFriendsIDs) {
 				new GetFsUserInfoTask_Friends().execute(id); //new, asynchronous way of doing this 
 			}
-			new GetVenmoUsernamesTask_Friends().execute(); //Get the list of Venmo usernames 
 		}
 		return true;
     }
@@ -100,9 +101,19 @@ public class FoursquareManager {
 	
 	public void GetVenueName()
 	{
-		User self = mFsApi.getFsUserInfo(mContext,  "self");
-		String venue_id = self.mLastCheckin.mVenueId;
-		sVenueName = mFsApi.getVenueName(venue_id);
+		try
+		{
+			User self = mFsApi.getFsUserInfo(mContext,  "self");
+			Log.v("Drinks FoursquareManager", "User self: " + self.toString());
+			String venue_id = self.mLastCheckin.mVenueId;
+			Log.v("Drinks FoursquareManager", "String venue_id = " + venue_id);
+			sVenueName = mFsApi.getVenueName(venue_id);
+		}
+		catch(Exception e)
+		{
+			sVenueName = "location";
+			Log.v("Drinks FoursquareManager", "Error: exception caught when getting venue name: " + e.toString());
+		}
 		
 	}
 	
@@ -111,9 +122,19 @@ public class FoursquareManager {
 	 */
 	public boolean RetrievePeopleAtVenue(Context ctxt, User user, FriendsAdapter adapter)
 	{
+		Log.v("Drinkstest", "Reached RetrievePeopleAtVenue");
 		this.adapter = adapter;
 		User self = mFsApi.getFsUserInfo(mContext,  "self");
-		String venue_id = self.mLastCheckin.mVenueId;
+		String venue_id;
+		try
+		{
+			venue_id = self.mLastCheckin.mVenueId;
+		}
+		catch(Exception e)
+		{
+			Log.v("Drinks FoursquareManager", "Error: exception aught when setting venue_id: " + e.toString());
+			venue_id = "";
+		}
 		
 		peopleAtVenue = new User[sPeopleAtVenue.size()];
 		
@@ -160,7 +181,9 @@ public class FoursquareManager {
 	private class GetVenmoUsernamesTask_Friends extends AsyncTask<Void, Void, Void> {
 		@Override
 		protected Void doInBackground(Void... voids) {
+			Log.v("Drinkstest", "Reached GetVenmoUsernamesTask_Friends");
 			JSONArray myArray = new JSONArray();
+			Log.v("", "");
 			try
 			{
 				Log.v("Drinks FoursquareManager", "sFriendsIDs: " + sFriendsIDs);
@@ -193,6 +216,7 @@ public class FoursquareManager {
 	private class GetVenmoUsernamesTask_PeopleAtVenue extends AsyncTask<Void, Void, Void> {
 		@Override
 		protected Void doInBackground(Void... voids) {
+			Log.v("Drinkstest", "Reached GetVenmoUsernamesTask_PeopleAtVenue, doInBackgound");
 			JSONArray myArray = new JSONArray();
 			try
 			{	
@@ -214,6 +238,7 @@ public class FoursquareManager {
 		@Override
 		protected Void doInBackground(String... ids) {
 			
+			Log.v("Drinkstest", "Reached GetFsUserInfoTask_Friends doInBackground");
 			// Make the VenmoAPI call to see if user is on Venmo
 			for(String id: ids) //The size of ids is always just 1.  
 			{
@@ -237,12 +262,20 @@ public class FoursquareManager {
 		@Override
 		protected void onPostExecute(Void result)
 		{
+			Log.v("Drinkstest", "Reached onPostExecute in RetrieveFoursquareFriends");
 			friends = new User[sFriends.size()];
 			Log.v("Drinks FoursquareManager", "Size of sFriends: " + sFriends.size());
 			for(int i = 0; i < sFriends.size(); i++)
 			{
 				if(sFriends.get(i) != null && sFriends.get(i).mFullName != null && sFriends.get(i).mFullName != "") {
-					friends[i] = sFriends.get(i);
+					try
+					{
+						friends[i] = sFriends.get(i);
+					}
+					catch(Exception e)
+					{
+						Log.v("Drinks FoursquareManager", "Error: " + e.toString());
+					}
 					//Log.v("Drinks FoursquareManager", "friend added: " + sFriends.get(i).mFullName);
 				} 
 				else
@@ -262,16 +295,23 @@ public class FoursquareManager {
 				      // When clicked, show a toast with the TextView text
 				      Log.v("Drinks MainActivity", "something was selected!");
 				      
-				      User user;
-				      if(mWhichOne == 2) {
-				    	  Log.v("Drinks Foursquaremanager", "Using peopleAtVenue********");
-				    	  user = peopleAtVenue[position];
-				      } else {
-				    	  Log.v("Drinks Foursquaremanager", "Using friends*************");
-				    	  user = friends[position];
+				      User user = null;
+				      try
+				      {
+					      if(mWhichOne == 2) {
+					    	  Log.v("Drinks Foursquaremanager", "Using peopleAtVenue********");
+					    	  user = peopleAtVenue[position];
+					      } else {
+					    	  Log.v("Drinks Foursquaremanager", "Using friends*************");
+					    	  user = friends[position];
+					      }
+					      Log.v("Drinks FoursquareManager", "user selected was: " + user.mFullName);
+				      }
+				      catch(Exception e)
+				      {
+				    	  Log.v("Drinks", "Error: exception caught: " + e.toString());
 				      }
 				      
-				      Log.v("Drinks FoursquareManager", "user selected was: " + user.mFullName);
 				      
 				      String recipient = null;
 				      
@@ -308,24 +348,23 @@ public class FoursquareManager {
 				      }
 				      
 				      
-				      Intent sendIntent = VenmoSDK.openVenmoPayment("1001", "abcd", "DrinksOnMe", recipient, "0.01", "for a drink on me!", "pay");
-			    		
-			    		try
-			    		{
+				      String app_id = "1001";
+				      String local_app_id = "abcd";
+				      String app_name = "DrinksOnMe";
+				      String amount = "5.00";
+				      String note = "for a drink on me!";
+				      String txn = "pay";
+				      
+				      Intent sendIntent = VenmoSDK.openVenmoPayment(app_id, local_app_id, app_name, recipient, amount, note, txn);
+			    		try{
 			    			myListActivity.startActivity(sendIntent);
 			    		}
-			    		catch (ActivityNotFoundException e) {
-			    			// Venmo native app not install on device, so fallback to web
-			    			sendIntent = VenmoSDK.openVenmoPaymentInBrowser("1001", "abcd", "DrinksOnMe", recipient, "0.01", "for testing", "pay");
-			    			try
-			    			{
-			    				myListActivity.startActivity(sendIntent);
-			    			}
-			    			catch(ActivityNotFoundException e2)
-			    			{
-			    				Log.e("Venmo MainActivity", "Error: " + e2);
-			    			}
+			    		catch (ActivityNotFoundException e) // Venmo native app not install on device, so fallback to web 
+			    		{
+			    			sendIntent = VenmoSDK.openVenmoPaymentInBrowser(app_id, local_app_id, app_name, recipient, amount, note, txn);
+		    				myListActivity.startActivity(sendIntent);
 			        	}
+			    		
 				    }
 				  });	  
 		}
@@ -338,7 +377,7 @@ public class FoursquareManager {
 			
 		@Override
 		protected Void doInBackground(String... ids) {
-			
+			Log.v("Drinkstest", "Reached GetFsUserInfoTask_Venue, doInBackground");
 			// Make the VenmoAPI call to see if user is on Venmo
 			for(String id: ids)
 			{
@@ -361,6 +400,7 @@ public class FoursquareManager {
 		
 		protected void onPostExecute(Void result)
 		{
+			Log.v("Drinkstest", "Reached onPostExecute method of GetFsUserInfoTask_Venue");
 			peopleAtVenue = new User[sPeopleAtVenue.size()];
 			Log.v("Drinks FoursquareManager", "Size of sPeopleAtVenue: " + sPeopleAtVenue.size());
 			for(int i = 0; i < sPeopleAtVenue.size(); i++)

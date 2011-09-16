@@ -8,7 +8,7 @@ Note that the Foursquare and Venmo secret keys have been removed from the Drinks
 
 To get these keys, first you will need to register your app with Venmo at https://venmo.com/account/app/new and with Foursquare at https://foursquare.com/oauth/register.
 
-From Venmo you will get a client id and a secret key.  The client id needs to be entered on line 351, in the variable "app_id".  The secret key needs to be entered in two places: the variable SECRET at the top of Utils/VenmoAPI.java, and the variable app_secret in URLActivity.java.  
+From Venmo you will get a client id and a secret key.  The client id needs to be entered in utils/FoursquareManager.java, on line 351, in the variable "app_id".  The secret key needs to be entered in two places: the variable SECRET at the top of Utils/VenmoAPI.java, and the variable app_secret in URLActivity.java.  
 
 From Foursquare you will get a callback_url and a client_id.  These both need to be entered at the top of FoursquareOauthActivity.java (in CALLBACK_URL and CLIENT_ID, respectively).  The client_id also needs to be added at the top of VenmoAPI.java (the variable CLIENT_ID).
 

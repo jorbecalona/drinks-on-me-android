@@ -16,7 +16,7 @@ public class VenmoApi {
 	String ROOT = "https://api.foursquare.com/v2/";
 	String VERSION = "&v=20110908";
 	
-	private static final String myAppId = "1001";
+	private static final String myAppId = "9999";
 	
 	String CLIENT_ID = ""; //need to get this from foursquare (https://foursquare.com/oauth/register)
 	static String SECRET = "";  //need to get this from Venmo (https://venmo.com/account/app/new)

@@ -14,8 +14,8 @@ public class FoursquareOauthActivity extends Activity {
     private static final String TAG = "FoursquareConnectActivity";
 	
     //Venmo Foursquare oauth values
-    public static final String CALLBACK_URL = ""; //need to get this from foursquare (https://foursquare.com/oauth/register)
-    public static final String CLIENT_ID = ""; //need to get this from foursquare
+    public static final String CALLBACK_URL = "http://www.umich.edu"; //need to get this from foursquare (https://foursquare.com/oauth/register)
+    public static final String CLIENT_ID = "DQ0F3QJ3AUDKN5EG11VTXKLC02XG1OP1ZJ0OI5LFF5SFIDJ5"; //need to get this from foursquare
     
     public String mUserAuthorized = "0";
     public String accessToken;

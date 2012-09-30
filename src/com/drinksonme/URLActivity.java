@@ -42,7 +42,7 @@ public class URLActivity extends Activity {
 		Log.d("Venmo PropsURLActivity", "signed_request: " + signed_request);
 		
 		//VenmoSDK myVenmoSDK = new VenmoSDK(myAppId, myAppLocalId, myAppName); //add in appSecret, appName, appLocalId
-		String app_secret = ""; //secret key of app registered with Venmo
+		String app_secret = "yy3qJsMsmGDeM9j4JreTn8AcYgtNJbjP"; //secret key of app registered with Venmo
 		VenmoResponse response = VenmoSDK.validateVenmoPaymentResponse(signed_request, app_secret);
 		
 		setContentView(R.layout.main);

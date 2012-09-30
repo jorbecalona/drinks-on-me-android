@@ -16,10 +16,10 @@ public class VenmoApi {
 	String ROOT = "https://api.foursquare.com/v2/";
 	String VERSION = "&v=20110908";
 	
-	private static final String myAppId = "9999";
+	private static final String myAppId = "1171";
 	
-	String CLIENT_ID = ""; //need to get this from foursquare (https://foursquare.com/oauth/register)
-	static String SECRET = "";  //need to get this from Venmo (https://venmo.com/account/app/new)
+	String CLIENT_ID = "DQ0F3QJ3AUDKN5EG11VTXKLC02XG1OP1ZJ0OI5LFF5SFIDJ5"; //need to get this from foursquare (https://foursquare.com/oauth/register)
+	static String SECRET = "yy3qJsMsmGDeM9j4JreTn8AcYgtNJbjP";  //need to get this from Venmo (https://venmo.com/account/app/new)
 	
 	
 	public static Hashtable<String,String> venmoHashtable = new Hashtable<String,String>();
